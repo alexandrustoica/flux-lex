@@ -5,4 +5,4 @@ package flux.analyzer
  * @version 1.0
  */
 
-public interface Analyzer
+interface Analyzer
