@@ -7,9 +7,9 @@ type Student = union(id: Int, name: String)
 Student element = Student(id: 1, name: "Student Test");
 
 String console = read();
-String document = read(filename: "source.txt");
+String 1document = read(filename: "source.txt");
 
-print(message: "ana", filename: "source.txt");
+print(message: "test", filename: "source.txt"");
 
 if(integer >= 3) {
     print(message: "integer");

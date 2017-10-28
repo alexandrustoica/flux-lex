@@ -8,5 +8,7 @@ import java.io.File
 
 fun main(args: Array<String>) {
     val analyzer = LexicalAnalyzer(File("source.flux")).analyze()
-    analyzer.internalForm.forEach { element -> println("${element.first} | ${element.second}") }
+    analyzer.symbolTable.forEach { key, value -> println("$key || $value") }
+    analyzer.validator.accumulator.forEach { println(it.message)}
+    analyzer.internalForm.forEach { println("${it.first} | ${it.second}") }
 }
