@@ -1,6 +1,7 @@
 package flux.analyzer
 
 import flux.domain.Location
+import flux.domain.SymbolTable
 import flux.exception.OpenQuotesException
 import flux.exception.PropertyNameException
 import flux.validator.DynamicAccumulatorValidator
@@ -15,10 +16,10 @@ import java.util.*
  */
 
 class LexicalAnalyzer constructor(private val source: File,
-                                  val symbolTable: SortedMap<String, Int>,
+                                  val symbolTable: SymbolTable<String, Int>,
                                   val internalForm: MutableList<Pair<Int, Int>>) : Analyzer {
 
-    constructor(source: File) : this(source, sortedMapOf(), mutableListOf())
+    constructor(source: File) : this(source, SymbolTable(), mutableListOf())
 
     val validator: Validator<String, Exception> = DynamicAccumulatorValidator(mutableListOf())
 
@@ -80,13 +81,13 @@ class LexicalAnalyzer constructor(private val source: File,
                     Pair(1, code), Pair((keyWords["\""]!! as String).toInt(), -1)))
 
     private fun saveConstantStringTokenToTableSymbols(token: String): Int =
-            symbolTable.getOrPut(token, { symbolTable.size })
+            symbolTable.getOrPut(token, { symbolTable.size() })
 
     private fun saveIdentifierTokenToInternalForm(code: Int) =
             internalForm.add(Pair(0, code))
 
     private fun saveTokenToTableSymbols(token: String): Int =
-            symbolTable.getOrPut(token, { symbolTable.size })
+            symbolTable.getOrPut(token, { symbolTable.size() })
 
     private fun isTokenKeyWord(token: String): Boolean = keyWords.keys.contains(token)
 
