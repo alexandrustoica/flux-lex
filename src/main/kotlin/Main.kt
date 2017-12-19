@@ -9,7 +9,7 @@ import java.io.File
 
 fun main(args: Array<String>) {
     val analyzer = LexicalAnalyzer(File("source.flux")).analyze()
-    analyzer.symbolTable.forEach { key, value -> println("$key || $value") }
+    // analyzer.symbolTable.forEach { key, value -> println("$key || $value") }
     analyzer.validator.accumulator.forEach { println(it.message)}
     analyzer.internalForm.forEach { println("${it.first} | ${it.second}") }
 }
