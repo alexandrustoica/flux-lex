@@ -1,4 +1,4 @@
-package org.flux.application
+package org.flux.lexical
 import com.xenomachina.argparser.ArgParser
 
 fun main(args: Array<String>) {

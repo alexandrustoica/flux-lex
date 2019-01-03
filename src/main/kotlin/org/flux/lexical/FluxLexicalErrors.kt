@@ -1,4 +1,4 @@
-package flux.validator
+package org.flux.lexical
 
 interface FluxLexicalErrors<T> {
     fun errors(): List<Exception>

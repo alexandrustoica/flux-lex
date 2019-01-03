@@ -1,7 +1,5 @@
 package org.flux.lexical
 
-import flux.domain.Location
-
 
 internal data class TokenWithLocation(
         val token: Token,

@@ -1,4 +1,4 @@
-package flux.validator
+package org.flux.lexical
 
 internal class FluxLexicalErrorAccumulator<T>(
         private val accumulator: MutableList<Exception> = mutableListOf()) :

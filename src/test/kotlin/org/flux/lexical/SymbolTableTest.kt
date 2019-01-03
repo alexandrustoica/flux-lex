@@ -1,11 +1,8 @@
-package org.flux.application
+package org.flux.lexical
 
 import org.assertj.core.api.Assertions.assertThat
-import org.flux.lexical.LexicalSymbol
-import org.flux.lexical.Line
-import org.flux.lexical.SymbolTable
-import org.flux.lexical.Tokens
 import org.junit.jupiter.api.Test
+import java.io.File
 
 /**
  * @author Alexandru Stoica
@@ -19,7 +16,7 @@ internal class SymbolTableTest {
         val code = "String test = \"test\";"
         val subject = listOf(LexicalSymbol("test", 0))
         // when:
-        val result = SymbolTable(Tokens(Line(value = code, index = 0)))
+        val result = LexicalSymbolTable(Tokens(Line(value = code, index = 0)))
         // then:
         assertThat(result).containsExactlyElementsOf(subject)
     }
@@ -27,11 +24,6 @@ internal class SymbolTableTest {
     @Test
     fun `when generating symbol table for file with multiple lines expect correct symbol table`() {
         // given:
-        val lines = {}.javaClass
-                .getResource("/source.flux")
-                .readText().lineSequence()
-                .mapIndexed { index, line -> Line(line, index) }
-                .toList()
         val subject = listOf(
                 LexicalSymbol("integer", 0),
                 LexicalSymbol("3", 1),
@@ -47,7 +39,8 @@ internal class SymbolTableTest {
                 LexicalSymbol("10", 11),
                 LexicalSymbol("element", 12))
         // when:
-        val result = SymbolTable(lines)
+        val result = LexicalSymbolTable(File({}.javaClass
+                .getResource("/source.flux").toURI()))
         // then:
         assertThat(result).containsExactlyElementsOf(subject)
     }

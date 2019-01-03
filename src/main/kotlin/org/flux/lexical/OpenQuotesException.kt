@@ -1,6 +1,4 @@
-package flux.exception
-
-import flux.domain.Location
+package org.flux.lexical
 
 
 internal class OpenQuotesException(location: Location):

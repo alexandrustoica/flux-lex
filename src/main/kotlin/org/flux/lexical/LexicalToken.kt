@@ -21,6 +21,7 @@ internal sealed class LexicalToken : Token {
         }
 
         override fun asSymbol(): Symbol? = null
+
     }
 
     internal data class Identifier(

@@ -1,5 +1,9 @@
 package org.flux.lexical
 
+
+
 internal data class InternalFormRecord(
-        private val keyWord: KeyWord,
-        private val symbolKey: Int)
+        private val value: Token,
+        private val symbolKey: Int? = null) {
+
+}
