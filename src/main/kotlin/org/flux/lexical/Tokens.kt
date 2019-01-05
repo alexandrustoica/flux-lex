@@ -38,8 +38,7 @@ internal class Tokens(
                 when {
                     keyWords.keys.contains(it) ->
                         listOf(LexicalToken.KeyWord.of(it))
-                    spacePattern.matches(it) ->
-                        listOf(LexicalToken.Space(it))
+                    spacePattern.matches(it) -> listOf()
                     constantStringPattern.matches(it) ->
                         listOf(LexicalToken.KeyWord.of("\""),
                                 LexicalToken.Constant(it.removeSurrounding("\"")),
