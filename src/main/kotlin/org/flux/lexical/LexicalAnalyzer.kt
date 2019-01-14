@@ -1,6 +1,5 @@
 package org.flux.lexical
 
-import flux.domain.Location
 import flux.exception.OpenQuotesException
 import flux.exception.PropertyNameException
 import flux.validator.FluxLexicalErrorAccumulator
@@ -8,13 +7,13 @@ import flux.validator.FluxLexicalErrors
 import java.io.File
 import java.util.*
 
-
 internal class LexicalAnalyzer constructor(
         private val source: File,
-        private val table: MutableMap<String, Int>,
-        val internalForm: MutableList<InternalFormRecord>) {
+        private val identifiers: MutableMap<String, Int>,
+        private val constants: MutableMap<String, Int>,
+        private val internalForm: MutableList<InternalFormRecord>) {
 
-    val validator: FluxLexicalErrors<String> = FluxLexicalErrorAccumulator()
+    private val validator: FluxLexicalErrors<TokenWithLocation> = FluxLexicalErrorAccumulator()
 
     private val keyWords: Properties = Properties().apply {
         {}.javaClass.getResourceAsStream("/keywords.properties").use { file -> load(file) }
@@ -27,44 +26,54 @@ internal class LexicalAnalyzer constructor(
         private const val REGEX_NUMBERS = "\\d+"
     }
 
-    constructor(source: File) : this(source, mutableMapOf(), mutableListOf())
+    constructor(source: File) :
+            this(source, mutableMapOf(), mutableMapOf(), mutableListOf())
 
-    fun analyze(): LexicalAnalyzer =
-            source.readLines()
-                    .mapIndexed { index, value -> Line(value, index) }
-                    .forEach { analyze(line = it) }
-                    .let { this }
+    internal data class LexicalResult(
+            val errors: List<Exception>,
+            val identifiers: Map<String, Int>,
+            val constants: Map<String, Int>,
+            val internalForm: List<InternalFormRecord>)
 
-    private fun analyze(line: Line) {
-        line.tokens().forEach { analyze(it) }
-    }
+//    fun analyze(): LexicalResult {
+//        source.readLines()
+//                .mapIndexed { index, value -> Line(value, index) }
+//                .forEach { analyze(line = it) }
+//        return LexicalResult(
+//                errors = validator.errors(),
+//                identifiers = identifiers,
+//                constants = constants,
+//                internalForm = internalForm)
+//    }
+//
+//    private fun analyze(line: Line) {
+//        line.tokens().forEach { analyze(it) }
+//    }
 
-    private fun analyze(token: Token) {
+    private fun analyze(token: TokenWithLocation) {
         when {
             isTokenKeyWord(token.value) ->
-                checkSingleQuotesToken(token.value,
-                        token.location).also { saveKeyTokenToInternalForm(it) }
+                checkSingleQuotesToken(token).also { saveKeyTokenToInternalForm(it) }
             isTokenStringConstant(token.value) ->
                 saveConstantStringTokenToInternalForm(
-                        saveConstantStringTokenToTableSymbols(token.value))
+                        constants.getOrPut(token.value) { constants.size })
             isTokenNumberConstant(token.value) ->
                 saveConstantNumberTokenToInternalForm(
-                        saveTokenToTableSymbols(token.value))
+                        constants.getOrPut(token.value) { constants.size })
             isTokenSpaceSeparator(token.value) -> {
             }
             isTokenIdentifier(token.value) -> saveIdentifierTokenToInternalForm(
-                    saveTokenToTableSymbols(token.value))
-            else -> validator.add(token.value, token.location)
-            { _, _ -> PropertyNameException(token.value, token.location) }
+                    identifiers.getOrPut(token.value) { identifiers.size })
+            else -> validator.add(token)
+            { PropertyNameException(token.value, token.location) }
         }
     }
 
-    private fun checkSingleQuotesToken(token: String,
-                                       location: Location): String =
-            if (token.matches("\"".toRegex()))
-                validator.add(token, location)
-                { _, _ -> OpenQuotesException(location) }.let { token }
-            else token
+    private fun checkSingleQuotesToken(token: TokenWithLocation): String =
+            if (token.value.matches("\"".toRegex()))
+                validator.add(token)
+                { OpenQuotesException(token.location) }.let { token.value }
+            else token.value
 
     private fun isTokenIdentifier(token: String): Boolean =
             token.matches(REGEX_IDENTIFIER.toRegex())
@@ -81,14 +90,9 @@ internal class LexicalAnalyzer constructor(
                             InternalFormRecord(KeyWord(1, "constant"), code),
                             InternalFormRecord(KeyWord((keyWords["\""] as String).toInt(), "\""), -1)))
 
-    private fun saveConstantStringTokenToTableSymbols(token: String): Int =
-            table.getOrPut(token) { table.count() }
-
     private fun saveIdentifierTokenToInternalForm(code: Int): Boolean =
             internalForm.add(InternalFormRecord(KeyWord(0, "identifier"), code))
 
-    private fun saveTokenToTableSymbols(token: String): Int =
-            table.getOrPut(token) { table.count() }
 
     private fun isTokenKeyWord(token: String): Boolean =
             keyWords.keys.contains(token)

@@ -1,7 +1,7 @@
 package org.flux.lexical
 
-import flux.domain.Location
-
-internal data class Token(
-        val value: String,
-        val location: Location)
+internal interface Token {
+    val value: String
+    val code: Int
+    fun asSymbol(): Symbol?
+}

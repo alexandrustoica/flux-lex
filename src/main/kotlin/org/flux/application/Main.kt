@@ -1,12 +1,11 @@
 package org.flux.application
 import com.xenomachina.argparser.ArgParser
-import org.flux.lexical.LexicalAnalyzer
-import java.io.File
 
 fun main(args: Array<String>) {
     ArgParser(args).parseInto(::FluxArgs).run {
-        val analyzer = LexicalAnalyzer(File(source)).analyze()
-        analyzer.validator.errors().forEach { println(it.message) }
-        analyzer.internalForm.forEach { println(it) }
+//        val analyzer = LexicalAnalyzer(File(source)).analyze()
+//        analyzer.errors.forEach { println(it.message) }
+//        analyzer.internalForm.forEach { println(it) }
     }
 }
+
