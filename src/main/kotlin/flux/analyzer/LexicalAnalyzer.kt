@@ -7,7 +7,6 @@ import flux.exception.PropertyNameException
 import flux.validator.DynamicAccumulatorValidator
 import flux.validator.Validator
 import java.io.File
-import java.io.FileInputStream
 import java.util.*
 
 
@@ -20,7 +19,7 @@ class LexicalAnalyzer constructor(
             mutableListOf())
 
     private val keyWords = Properties().apply {
-        FileInputStream(File("keywords.properties")).use { file -> load(file) }
+        {}.javaClass.getResourceAsStream("/keywords.properties").use { file -> load(file) }
     }
 
     companion object {
