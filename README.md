@@ -1,5 +1,6 @@
 # Flux Lexical Analyzer
 
+![](https://img.shields.io/codecov/c/github/alexandrustoica/flux.lexical.analyzer/master)
 ![](https://img.shields.io/github/languages/top/alexandrustoica/flux.lexical.analyzer)
 <a href="https://travis-ci.com/alexandrustoica/flux.lexical.analyzer">![](https://img.shields.io/travis/com/alexandrustoica/flux.lexical.analyzer/master)</a>
 <a href="https://github.com/alexandrustoica/flux.lexical.analyzer/blob/master/LICENSE"> ![](https://img.shields.io/badge/license-MIT-green)</a>
