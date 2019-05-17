@@ -7,6 +7,6 @@ fun main(args: Array<String>) {
     ArgParser(args).parseInto(::FluxArgs).run {
         val analyzer = LexicalAnalyzer(File(source)).analyze()
         analyzer.validator.errors().forEach { println(it.message) }
-        analyzer.internalForm.forEach { println("${it.first} | ${it.second}") }
+        analyzer.internalForm.forEach { println(it) }
     }
 }
