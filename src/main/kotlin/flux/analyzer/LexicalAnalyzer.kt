@@ -1,7 +1,6 @@
 package flux.analyzer
 
 import flux.domain.Location
-import flux.domain.SymbolTable
 import flux.exception.OpenQuotesException
 import flux.exception.PropertyNameException
 import flux.validator.DynamicAccumulatorValidator
@@ -12,7 +11,7 @@ import java.util.*
 
 class LexicalAnalyzer constructor(
         private val source: File,
-        private val symbolTable: SymbolTable<String, Int>,
+        private val table: MutableMap<String, Int>,
         val internalForm: MutableList<Pair<Int, Int>>) {
 
     val validator: Validator<String, Exception> = DynamicAccumulatorValidator(
@@ -39,7 +38,7 @@ class LexicalAnalyzer constructor(
                         "$REGEX_ATTRIBUTION|$REGEX_SEPARATORS|$REGEX_NUMBERS"
     }
 
-    constructor(source: File) : this(source, SymbolTable(), mutableListOf())
+    constructor(source: File) : this(source, mutableMapOf(), mutableListOf())
 
     fun analyze(): LexicalAnalyzer =
             source.readLines().map { getAtomsFrom(it) }
@@ -96,13 +95,13 @@ class LexicalAnalyzer constructor(
                             Pair((keyWords["\""] as String).toInt(), -1)))
 
     private fun saveConstantStringTokenToTableSymbols(token: String): Int =
-            symbolTable.getOrPut(token) { symbolTable.size() }
+            table.getOrPut(token) { table.count() }
 
     private fun saveIdentifierTokenToInternalForm(code: Int) =
             internalForm.add(Pair(0, code))
 
     private fun saveTokenToTableSymbols(token: String): Int =
-            symbolTable.getOrPut(token) { symbolTable.size() }
+            table.getOrPut(token) { table.count() }
 
     private fun isTokenKeyWord(token: String): Boolean =
             keyWords.keys.contains(token)
