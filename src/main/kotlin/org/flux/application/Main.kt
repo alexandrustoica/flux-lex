@@ -1,6 +1,6 @@
 package org.flux.application
 import com.xenomachina.argparser.ArgParser
-import flux.analyzer.LexicalAnalyzer
+import org.flux.lexical.LexicalAnalyzer
 import java.io.File
 
 fun main(args: Array<String>) {

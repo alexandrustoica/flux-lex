@@ -1,4 +1,4 @@
-package flux.analyzer
+package org.flux.lexical
 
 import flux.domain.Location
 import flux.exception.OpenQuotesException
@@ -116,6 +116,9 @@ class LexicalAnalyzer constructor(
             token.matches(REGEX_NUMBERS.toRegex())
 
     private fun getAtomsFrom(source: String): List<String> =
-            Finder().findAllIn(source, REGEX_TOKENS.toRegex())
+            REGEX_TOKENS.toRegex().findAll(source)
+                    .map { it.groupValues }
+                    .map { it.first() }
+                    .toList()
 
 }
