@@ -3,8 +3,8 @@ package org.flux.lexical
 import flux.domain.Location
 import flux.exception.OpenQuotesException
 import flux.exception.PropertyNameException
-import flux.validator.DynamicAccumulatorValidator
-import flux.validator.Validator
+import flux.validator.FluxLexicalErrorAccumulator
+import flux.validator.FluxLexicalErrors
 import java.io.File
 import java.util.*
 
@@ -14,8 +14,7 @@ class LexicalAnalyzer constructor(
         private val table: MutableMap<String, Int>,
         val internalForm: MutableList<Pair<Int, Int>>) {
 
-    val validator: Validator<String, Exception> = DynamicAccumulatorValidator(
-            mutableListOf())
+    val validator: FluxLexicalErrors<String> = FluxLexicalErrorAccumulator()
 
     private val keyWords = Properties().apply {
         {}.javaClass.getResourceAsStream("/keywords.properties").use { file -> load(file) }
