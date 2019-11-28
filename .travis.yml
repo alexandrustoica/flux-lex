@@ -1,14 +1,9 @@
-os: osx
-install: true
 language: java
+install: true
 
-script: ./gradlew --info --stacktrace test
+os: linux
+dist: trusty
+jdk: oraclejdk8
 
-before_cache:
-  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-
-cache:
-  directories:
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
+script:
+  - ./gradlew build --scan -s
