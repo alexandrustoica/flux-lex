@@ -7,3 +7,6 @@ jdk: oraclejdk8
 
 script:
   - ./gradlew build
+
+env:
+  - CODECOV_TOKEN="6e8ad055-8044-410b-aaeb-fed4247e6b27"
