@@ -42,8 +42,4 @@ internal sealed class LexicalToken : Token {
         override fun asSymbol(): Symbol? = null
     }
 
-    internal data class Space(override val value: String) : LexicalToken() {
-        override val code: Int = -3
-        override fun asSymbol(): Symbol? = null
-    }
 }
