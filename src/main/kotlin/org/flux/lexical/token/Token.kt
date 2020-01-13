@@ -1,4 +1,6 @@
-package org.flux.lexical
+package org.flux.lexical.token
+
+import org.flux.lexical.symbol.Symbol
 
 internal interface Token {
     val value: String

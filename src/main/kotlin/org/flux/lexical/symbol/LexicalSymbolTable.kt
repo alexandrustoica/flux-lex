@@ -1,5 +1,8 @@
-package org.flux.lexical
+package org.flux.lexical.symbol
 
+import org.flux.lexical.token.Line
+import org.flux.lexical.token.Token
+import org.flux.lexical.token.Tokens
 import java.io.File
 
 internal class LexicalSymbolTable(

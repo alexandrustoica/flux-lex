@@ -1,5 +1,7 @@
-package org.flux.lexical
+package org.flux.lexical.token
 
+import org.flux.lexical.symbol.LexicalSymbol
+import org.flux.lexical.symbol.Symbol
 import java.util.*
 
 internal sealed class LexicalToken : Token {

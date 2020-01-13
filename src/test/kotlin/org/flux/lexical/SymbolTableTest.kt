@@ -1,6 +1,10 @@
 package org.flux.lexical
 
 import org.assertj.core.api.Assertions.assertThat
+import org.flux.lexical.symbol.LexicalSymbol
+import org.flux.lexical.symbol.LexicalSymbolTable
+import org.flux.lexical.token.Line
+import org.flux.lexical.token.Tokens
 import org.junit.jupiter.api.Test
 import java.io.File
 

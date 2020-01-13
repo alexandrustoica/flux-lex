@@ -1,5 +1,9 @@
-package org.flux.lexical
+package org.flux.lexical.form
 
+import org.flux.lexical.symbol.LexicalSymbolTable
+import org.flux.lexical.symbol.SymbolTable
+import org.flux.lexical.token.Line
+import org.flux.lexical.token.Tokens
 import java.io.File
 
 internal class InternalForm(

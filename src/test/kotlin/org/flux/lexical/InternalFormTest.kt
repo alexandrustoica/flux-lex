@@ -1,6 +1,8 @@
 package org.flux.lexical
 
 import org.assertj.core.api.Assertions.assertThat
+import org.flux.lexical.form.InternalForm
+import org.flux.lexical.form.InternalFormRecord
 import org.junit.jupiter.api.Test
 import java.io.File
 

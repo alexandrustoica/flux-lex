@@ -1,4 +1,4 @@
-package org.flux.lexical
+package org.flux.lexical.symbol
 
 internal data class LexicalSymbol(
         override val value: String,

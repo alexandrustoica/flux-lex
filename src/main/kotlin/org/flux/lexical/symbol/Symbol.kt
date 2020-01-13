@@ -1,4 +1,4 @@
-package org.flux.lexical
+package org.flux.lexical.symbol
 
 internal interface Symbol {
     val value: String
