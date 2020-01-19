@@ -1,6 +1,5 @@
-
-FROM gradle:6.0.1-jdk8
-COPY --chown=gradle:gradle . /home/gradle/src
-WORKDIR /home/gradle/src
-RUN gradle build --no-daemon
-ENTRYPOINT ["java", "-jar", "/home/gradle/src/build/libs/flux.compiler-1.0.jar"]
+FROM openjdk:8-jdk-alpine
+VOLUME /tmp
+COPY /build/libs/flux.lexical.analyzer-1.0.jar flux.jar
+COPY /source.flux source.flux
+ENTRYPOINT ["java", "-jar", "flux.jar"]

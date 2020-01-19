@@ -23,7 +23,7 @@ buildscript {
 jar {
     manifest {
         attributes(
-                'Main-Class': 'org.flux.application.MainKt'
+                'Main-Class': 'org.flux.lexical.MainKt'
         )
     }
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
