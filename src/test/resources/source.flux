@@ -1,5 +1,3 @@
-0af
-
 Int integer = 3;
 String string = "Test";
 
